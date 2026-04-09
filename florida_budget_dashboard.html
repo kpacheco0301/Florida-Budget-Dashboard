@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florida · Budget Intelligence Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--blue:#003087;--blue-light:#EEF3FA;--navy:#1E3A5F;--bg:#F0F4F8;--card:#FFFFFF;--border:#E2E8F0;--text:#1E3A5F;--muted:#64748B;--faint:#94A3B8;--green:#059669;--amber:#D97706;--orange:#F97316;--teal:#0EA5A0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;transition:background .3s,color .3s;}
+body.dark{--bg:#0F172A;--card:#1E293B;--border:#2D3F58;--text:#E2E8F0;--muted:#94A3B8;--faint:#64748B;--blue-light:#0F1E35;}
+body.dark .ct{color:#E2E8F0;}body.dark .ins-title{color:#E2E8F0;}body.dark .page-title{color:#E2E8F0;}
+body.dark .rtbl td{border-bottom-color:#2D3F58;}body.dark .ctab.active{background:#2D3F58;}body.dark .ctabs{background:#0F172A;}
+/* Header */
+.hdr{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:58px;position:sticky;top:0;z-index:100;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.fl-seal{width:32px;height:32px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0;}
+.hdr-wordmark{display:flex;flex-direction:column;}
+.hw-top{color:#fff;font-size:13px;font-weight:600;letter-spacing:.02em;}
+.hw-bot{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:.04em;}
+.hdr-div{width:1px;height:28px;background:rgba(255,255,255,.12);}
+.hm{text-align:center;}
+.hm-v{color:#fff;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;}
+.hm-l{color:rgba(255,255,255,.4);font-size:9px;text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
+.hdr-actions{display:flex;align-items:center;gap:6px;}
+.hdr-btn{height:30px;padding:0 10px;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);font-size:11px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;}
+.hdr-btn:hover{background:rgba(255,255,255,.18);color:#fff;}
+.hdr-btn.dm-on{background:rgba(255,220,100,.15);border-color:rgba(255,220,100,.3);color:#FFD700;}
+.hdr-tag{background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:5px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0;}
+/* Layout */
+.main{padding:20px 24px;max-width:1280px;margin:0 auto;}
+.page-hd{margin-bottom:14px;}
+.page-title{font-size:22px;font-weight:700;color:var(--navy);transition:color .3s;}
+.page-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+.g2{display:grid;gap:14px;margin-bottom:14px;}
+.g255{grid-template-columns:1fr 1fr;}
+.card{background:var(--card);border-radius:12px;padding:16px;border:1px solid var(--border);transition:background .3s,border-color .3s;}
+.ct{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px;transition:color .3s;}
+.cs{font-size:10px;color:var(--muted);margin-bottom:10px;}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px;}
+.kpi{background:var(--card);border-radius:12px;padding:14px;border:1px solid var(--border);border-top-width:3px;transition:all .3s;}
+.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.kpi-value{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;margin-bottom:4px;}
+.kpi-change{font-size:10px;font-weight:600;}
+.kpi-change.up{color:#059669;}.kpi-change.dn{color:#DC2626;}.kpi-change.nt{color:var(--muted);}
+.ss{background:var(--card);border-radius:10px;padding:12px 16px;display:flex;gap:20px;align-items:center;margin-bottom:14px;border:1px solid var(--border);flex-wrap:wrap;transition:background .3s;}
+.ss-lbl{font-size:9px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;}
+.ss-val{font-size:16px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;}
+.ss-div{width:1px;height:32px;background:var(--border);}
+.sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px;margin-top:6px;}
+.sec-lbl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
+.sec-hd-line{flex:1;height:1px;background:var(--border);}
+.ctabs{display:flex;gap:2px;background:var(--bg);border-radius:8px;padding:3px;margin-bottom:10px;flex-wrap:wrap;transition:background .3s;}
+.ctab{padding:5px 10px;border-radius:6px;border:none;background:transparent;color:var(--muted);font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.ctab.active{background:var(--card);color:var(--navy);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.ctab:hover:not(.active){color:var(--navy);}
+.chart-wrap{position:relative;width:100%;}
+.h200{height:200px;}.h220{height:220px;}.h240{height:240px;}.h260{height:260px;}.h280{height:280px;}
+.lgnd{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.li{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);}
+.ld{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.wf-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.wf-lbl{font-size:11px;color:var(--muted);width:180px;flex-shrink:0;}
+.wf-bar{flex:1;}
+.wf-fill{border-radius:4px;padding:4px 8px;display:flex;align-items:center;min-width:60px;}
+.wf-val{font-size:10px;font-weight:600;color:#fff;white-space:nowrap;}
+.insight{background:var(--card);border-radius:10px;padding:14px;border:1px solid var(--border);border-left-width:4px;transition:background .3s;}
+.ins-icon{font-size:18px;display:block;margin-bottom:6px;}
+.ins-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.ins-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+.fund-item{margin-bottom:10px;}
+.fund-row-hdr{display:flex;justify-content:space-between;margin-bottom:4px;}
+.fund-name{font-size:11px;font-weight:600;color:var(--navy);}
+.fund-meta{font-size:10px;color:var(--muted);}
+.fund-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.fund-fill{height:100%;border-radius:4px;}
+.prog-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;}
+.rank-wrap{overflow-x:auto;}
+.rtbl{width:100%;border-collapse:collapse;}
+.rtbl th{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:6px 8px;text-align:left;border-bottom:2px solid var(--border);}
+.rtbl td{font-size:11px;padding:8px 8px;border-bottom:1px solid var(--border);color:var(--text);}
+.rtbl tbody tr:hover td{background:var(--bg);}
+.rn-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:10px;font-weight:700;}
+.sec-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;}
+.footer{text-align:center;padding:20px 24px;font-size:10px;color:var(--faint);}
+.yr-live{display:inline-block;width:6px;height:6px;border-radius:50%;background:#6EE7B7;margin-left:4px;animation:pulse 2s infinite;vertical-align:middle;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@media(max-width:900px){.g255{grid-template-columns:1fr;}.kpi-row{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="fl-seal">FL</div>
+    <div class="hdr-wordmark">
+      <div class="hw-top">State of Florida</div>
+      <div class="hw-bot">Budget Intelligence Portal</div>
+    </div>
+    <div class="hdr-div"></div>
+    <div class="hm"><div class="hm-v" id="hdrTotal">$117.4B</div><div class="hm-l">All-Funds Total</div></div>
+    <div class="hdr-div"></div>
+    <div class="hm"><div class="hm-v">$53.2B</div><div class="hm-l">General Revenue</div></div>
+    <div class="hdr-div"></div>
+    <div class="hm"><div class="hm-v">8</div><div class="hm-l">Policy Areas</div></div>
+    <div class="hdr-div"></div>
+    <div class="hm"><div class="hm-v">$7.76B</div><div class="hm-l">GR Ending Balance</div></div>
+  </div>
+  <div class="hdr-actions">
+    <button class="hdr-btn" id="dmBtn" onclick="toggleDark()">🌙 Dark Mode</button>
+    <button class="hdr-btn" onclick="window.print()">⬇ Export PDF</button>
+    <div class="hdr-tag" id="hdrTag">FY 2026-27</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="page-hd">
+    <div class="page-title">Florida Budget Intelligence Dashboard</div>
+    <div class="page-sub" id="pageSub">State of Florida · All Funds · FY 2026-27 Proposed — Governor DeSantis "Floridians First" Budget</div>
+  </div>
+
+  <!-- SUMMARY STRIP -->
+  <div class="ss">
+    <div><div class="ss-lbl">Total All-Funds — FY2026-27</div><div class="ss-val">$117.4B</div></div>
+    <div class="ss-div"></div>
+    <div><div class="ss-lbl">General Revenue</div><div class="ss-val">$53.2B</div></div>
+    <div class="ss-div"></div>
+    <div><div class="ss-lbl">GR Proposed Budget</div><div class="ss-val">$53.6B</div></div>
+    <div class="ss-div"></div>
+    <div><div class="ss-lbl">GR Ending Balance</div><div class="ss-val">$7.76B</div></div>
+    <div class="ss-div"></div>
+    <div><div class="ss-lbl">GR Growth vs FY26</div><div class="ss-val">+5.5%</div></div>
+    <div class="ss-div"></div>
+    <div><div class="ss-lbl">State Workforce</div><div class="ss-val">112,225</div></div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-row">
+    <div class="kpi" style="border-color:var(--orange);">
+      <div class="kpi-label">All-Funds Total</div>
+      <div class="kpi-value" style="color:var(--orange);">$117.4B</div>
+      <div class="kpi-change nt">▲ +1.1% vs FY26</div>
+    </div>
+    <div class="kpi" style="border-color:var(--blue);">
+      <div class="kpi-label">General Revenue</div>
+      <div class="kpi-value" style="color:var(--blue);">$53.2B</div>
+      <div class="kpi-change up">▲ +5.5% growth</div>
+    </div>
+    <div class="kpi" style="border-color:#059669;">
+      <div class="kpi-label">GR Ending Balance</div>
+      <div class="kpi-value" style="color:#059669;">$7.76B</div>
+      <div class="kpi-change nt">AAA Credit Rating</div>
+    </div>
+    <div class="kpi" style="border-color:var(--amber);">
+      <div class="kpi-label">Rainy Day Fund (BSF)</div>
+      <div class="kpi-value" style="color:var(--amber);">$5.0B</div>
+      <div class="kpi-change nt">Tripled · at maximum</div>
+    </div>
+    <div class="kpi" style="border-color:var(--teal);">
+      <div class="kpi-label">Total Tax Relief</div>
+      <div class="kpi-value" style="color:var(--teal);">$9.7B</div>
+      <div class="kpi-change nt">Since FY2018-19</div>
+    </div>
+  </div>
+
+  <!-- BUDGET FLOW -->
+  <div class="sec-hd" style="margin-top:2px;"><span class="sec-lbl">Budget Flow — Sources &amp; Uses</span><div class="sec-hd-line"></div></div>
+  <div class="card" style="padding:20px 18px;margin-bottom:14px;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <div>
+        <div class="ct">Where the Money Comes From &amp; Where It Goes</div>
+        <div class="cs">Click a <strong>revenue source</strong> (top) to drill down into its expenditure breakdown · FY2026-27 Proposed</div>
+      </div>
+      <button id="flowResetBtn" onclick="resetFlow()" style="display:none;padding:5px 12px;border-radius:20px;border:1.5px solid var(--orange);background:#FFF7ED;color:var(--orange);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">✕ Reset view</button>
+    </div>
+    <div id="flowMain" style="margin-top:10px;"></div>
+    <div id="flowDrill" style="display:none;margin-top:12px;border-radius:10px;overflow:hidden;border:1px solid var(--border);"></div>
+  </div>
+
+  <!-- ROW 1: Budget Trend + Top 10 Agencies -->
+  <div class="g2 g255" style="margin-bottom:14px;">
+    <div class="card">
+      <div class="ct">Budget Trend — All Funds</div>
+      <div class="cs">Total appropriations by fiscal year (FY2019-20 – FY2026-27) · all fund types combined · $B</div>
+      <div class="chart-wrap" style="height:260px;"><canvas id="trendChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct">Top 10 Agencies — By Appropriation</div>
+      <div class="cs">FY2026-27 proposed · sorted by selected fund type · all programs combined</div>
+      <div class="ctabs" id="agTabs">
+        <button class="ctab active" onclick="setAgView('all',this)">🌐 All Funds</button>
+        <button class="ctab" onclick="setAgView('gf',this)">💰 Gen. Revenue</button>
+        <button class="ctab" onclick="setAgView('ff',this)">🇺🇸 Federal</button>
+        <button class="ctab" onclick="setAgView('tf',this)">🏦 Trust Funds</button>
+        <button class="ctab" onclick="setAgView('yoy',this)">📈 YoY Change</button>
+      </div>
+      <div id="agAllWrap"><div class="chart-wrap" style="height:220px;"><canvas id="agAllBar"></canvas></div></div>
+      <div id="agGfWrap" style="display:none;"><div class="chart-wrap" style="height:220px;"><canvas id="agBar"></canvas></div></div>
+      <div id="agFfWrap" style="display:none;"><div class="chart-wrap" style="height:220px;"><canvas id="agFfBar"></canvas></div></div>
+      <div id="agTfWrap" style="display:none;"><div class="chart-wrap" style="height:220px;"><canvas id="agTfBar"></canvas></div></div>
+      <div id="agYoyWrap" style="display:none;"><div class="chart-wrap" style="height:220px;"><canvas id="agYoyBar"></canvas></div></div>
+    </div>
+  </div>
+
+  <!-- ROW 2: Sector Deep Dive + GF Revenue Sources -->
+  <div class="g2 g255">
+    <div class="card">
+      <div class="ct">Sector / Agency — Deep Dive</div>
+      <div class="cs">FY2026-27 proposed · click any sector to see its agencies and programs</div>
+      <div id="sectorDrillWrap"></div>
+      <div id="sectorDrillDetail" style="display:none;margin-top:10px;border-radius:8px;border:1px solid var(--border);overflow:hidden;"></div>
+    </div>
+    <div class="card">
+      <div class="ct">GF Revenue Sources</div>
+      <div class="cs">Where the General Fund comes from · No state income tax in Florida · click a block for details</div>
+      <div id="revTreemap" style="height:240px;border-radius:8px;overflow:hidden;"></div>
+      <div id="revDetail" style="display:none;margin-top:12px;border-radius:8px;overflow:hidden;border:1px solid var(--border);"></div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Fund Types + GF by Category -->
+  <div class="g2 g255" style="margin-top:14px;">
+    <div class="card" id="fundCard">
+      <div class="ct">Fund Types Breakdown</div>
+      <div class="cs">FY2026-27 proposed · click a fund type to explore · $117.4B total</div>
+      <div style="display:flex;border-radius:8px;overflow:hidden;height:14px;margin-bottom:16px;gap:2px;" id="fundStrip"></div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;" id="fundTiles"></div>
+      <div id="fundDetail" style="display:none;margin-top:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);border-left-width:4px;"></div>
+    </div>
+    <div class="card">
+      <div class="ct">General Revenue by Policy Area</div>
+      <div class="cs">How the $53.2B General Revenue is allocated · FY2026-27 · animated rings</div>
+      <div id="gfRings" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px;"></div>
+    </div>
+  </div>
+
+  <!-- KEY FINDINGS -->
+  <div class="sec-hd" style="margin-top:14px;"><span class="sec-lbl">Key Budget Findings</span><div class="sec-hd-line"></div></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;" id="insights"></div>
+
+  <!-- TREEMAP -->
+  <div class="sec-hd"><span class="sec-lbl">Top 10 Agencies — All Funds Treemap</span><div class="sec-hd-line"></div></div>
+  <div class="card" style="padding:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <div class="ct">Agency Budget Treemap — All Funds</div>
+      <span style="font-size:10px;color:var(--faint);">Click any block for details</span>
+    </div>
+    <div class="cs" style="margin-bottom:14px;">FY2026-27 proposed · top 10 agencies by total appropriation · area proportional to budget</div>
+    <div id="tmapWrap" style="width:100%;height:400px;position:relative;border-radius:8px;overflow:hidden;"></div>
+    <div id="tmapDetail" style="display:none;margin-top:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border);">
+      <div id="tmapDetailInner"></div>
+    </div>
+  </div>
+
+  <!-- WATERFALL -->
+  <div class="sec-hd" style="margin-top:14px;"><span class="sec-lbl">General Revenue Flow — FY2026-27</span><div class="sec-hd-line"></div></div>
+  <div class="card">
+    <div class="cs">From estimated GR revenues to ending balance</div>
+    <div id="wf" style="margin-top:8px;"></div>
+  </div>
+
+  <div class="footer">State of Florida · FY2026-27 Proposed Budget · Governor Ron DeSantis "Floridians First" · Source: Florida Senate Appropriations Committee · Office of Policy and Budget</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+Chart.defaults.font.family="'DM Sans',sans-serif";
+Chart.defaults.color='#64748B';
+
+// ── CHART REFS ──────────────────────────────────────────────────────────────
+let tRef=null;
+
+// ── FL SECTOR DATA ──────────────────────────────────────────────────────────
+// 7 sectors from actual Excel data (combining Education Enhancement + Education Other = Education)
+const SC=[
+  {n:'Health & Human Svcs',    c:'#F97316'},
+  {n:'Education',               c:'#003087'},
+  {n:'Transportation & Env.',  c:'#0EA5A0'},
+  {n:'Criminal Justice',        c:'#DC2626'},
+  {n:'General Government',      c:'#7C3AED'},
+  {n:'Judicial Branch',         c:'#EAB308'},
+  {n:'Other / Administered',    c:'#94A3B8'},
+];
+// FY2026-27 proposed amounts in $M
+const SC26=[48583, 32521, 21195, 7464, 6775, 820, 690];
+// Education = 2396(Enhancement) + 30124(AllOther) combined as 32521 per PDF
+
+// ── AGENCIES DATA ────────────────────────────────────────────────────────────
+const AG_ALL=[
+  {n:'Agency for Health Care Admin.',  v:37557, c:'#F97316'},
+  {n:'Dept. of Education',              v:32521, c:'#003087'},
+  {n:'Dept. of Transportation',         v:15422, c:'#0EA5A0'},
+  {n:'Dept. of Children & Families',    v:4892,  c:'#F97316'},
+  {n:'Dept. of Health',                 v:4125,  c:'#F97316'},
+  {n:'Dept. of Corrections',            v:4301,  c:'#DC2626'},
+  {n:'Agriculture & Consumer Svcs.',    v:2781,  c:'#0EA5A0'},
+  {n:'Environmental Protection',        v:2390,  c:'#0EA5A0'},
+  {n:'Justice Administration',          v:1388,  c:'#DC2626'},
+  {n:'Agency for Persons w/ Disabilities',v:1302, c:'#F97316'},
+];
+
+// GR top agencies: v = FY26-27, v25 = FY25-26 (estimated from PDF + $850M reductions context)
+const AG=[
+  {n:'Dept. of Education',              v:23738, v25:22977, c:'#003087'},  // +$761M K-12 increase per PDF
+  {n:'Agency for Health Care Admin.',   v:18916, v25:18200, c:'#F97316'},  // +$716M Medicaid growth
+  {n:'Dept. of Corrections',            v:4301,  v25:4100,  c:'#DC2626'},  // +$201M per PDF (500 FTEs)
+  {n:'Justice Administration',          v:1388,  v25:1320,  c:'#7C3AED'},  // +$68M
+  {n:'Juvenile Justice',                v:890,   v25:910,   c:'#EAB308'},  // -$20M (reductions)
+  {n:'Dept. of Children & Families',    v:889,   v25:870,   c:'#F97316'},  // +$19M
+  {n:'Dept. of Health',                 v:694,   v25:720,   c:'#F97316'},  // -$26M (reductions)
+  {n:'General Government (Admin.)',     v:694,   v25:750,   c:'#0EA5A0'},  // -$56M (efficiencies)
+  {n:'Law Enforcement (FDLE)',          v:478,   v25:465,   c:'#DC2626'},  // +$13M
+  {n:'Elder Affairs',                   v:204,   v25:195,   c:'#F97316'},  // +$9M
+];
+
+const AG_FF=[
+  {n:'Agency for Health Care Admin.',   v:24180, c:'#F97316'},
+  {n:'Dept. of Education',              v:4141,  c:'#003087'},
+  {n:'Dept. of Transportation',         v:5298,  c:'#0EA5A0'},
+  {n:'Dept. of Children & Families',    v:2500,  c:'#F97316'},
+  {n:'Dept. of Health',                 v:1800,  c:'#F97316'},
+  {n:'Environmental Protection',        v:800,   c:'#0EA5A0'},
+  {n:'Commerce',                         v:1180,  c:'#7C3AED'},
+  {n:'Corrections',                      v:264,   c:'#DC2626'},
+  {n:'Juvenile Justice',                v:150,   c:'#EAB308'},
+  {n:'Law Enforcement (FDLE)',          v:60,    c:'#DC2626'},
+];
+
+// ── GF REVENUE SOURCES ───────────────────────────────────────────────────────
+const RV_TREE=[
+  {n:'Sales &\nUse Tax',       full:'Sales & Use Tax',        v:73.2, amt:'$38.97B', c:'#003087', ct:'#fff',
+   trend:'▲ Stable · Florida\'s primary revenue source — no state income tax',
+   desc:'Florida has no state personal income tax. Sales & Use Tax at 6% is the dominant revenue source. Local governments add up to 1.5% optionally. Major driver of Florida\'s pro-growth tax climate.',
+   facts:['FY25-26 estimated: $37.2B — consistent growth','Florida state rate: 6% · locals add 0-1.5%','Groceries partially exempt; most services exempt','Florida ranks #1 nationally for no income tax competitive advantage']},
+  {n:'Corporate\nIncome Tax', full:'Corporate Income Tax',   v:9.0,  amt:'$4.79B',  c:'#003087', ct:'#fff',
+   trend:'▲ Growing · Florida CIT rate 5.5% — among lowest nationally',
+   desc:'Florida\'s 5.5% corporate income tax applies to C-corporations doing business in the state. Florida has steadily attracted corporate relocations, growing the base.',
+   facts:['FY25-26 estimated: $4.5B','Corporate rate 5.5% — reduced from 5.5% via temporary holiday','Temporary rate reduction FY2021-22 through FY2023-24','Pass-through businesses (S-corps, LLCs) pay NO Florida income tax']},
+  {n:'Documentary\nStamp',    full:'Documentary Stamp Tax',  v:6.5,  amt:'$3.46B',  c:'#0EA5A0', ct:'#fff',
+   trend:'▼ Normalizing · real estate activity moderating from peak',
+   desc:'Tax on real estate transactions and certain financial instruments. Closely tied to Florida real estate market activity. Peak revenue occurred in FY2021-22 during the housing boom.',
+   facts:['Rate: $0.70 per $100 on deeds · $0.35 per $100 on mortgages','FY22-23 peak: $5.3B during Florida real estate surge','Allocated: Divided between GR, Land Acquisition, and Debt Service Trust Funds','Indicator: reflects Florida migration and real estate health']},
+  {n:'Comm. Svcs.\n& Other',  full:'Communications Services & Other',v:11.3,amt:'$6.02B',c:'#EAB308',ct:'#1E3A5F',
+   trend:'▲ Steady · includes beverage tax, tobacco, intangibles',
+   desc:'Comprises Communications Services Tax (telecommunications), beverage tax, tobacco taxes, intangible personal property tax, and various fees and service charges.',
+   facts:['Communications Services Tax: $1.5B · declining with cord-cutting','Beverage License Tax: ~$0.5B','Tobacco Tax: ~$0.8B','Investment income & miscellaneous: ~$3.2B']},
+];
+
+// ── SECTOR DRILL-DOWN DATA ────────────────────────────────────────────────────
+const SECTOR_DEPTS={
+  'Health & Human Svcs':  [{n:'Agency for Health Care Admin.',v:37557,k:'ahca'},{n:'Dept. of Children & Families',v:4892,k:'dcf'},{n:'Dept. of Health',v:4125,k:'doh'},{n:'Agency for Persons w/ Disabilities',v:1302,k:'apd'},{n:'Elder Affairs',v:487,k:'ea'}],
+  'Education':             [{n:'Dept. of Education (K-12, SUS, FCS)',v:32521,k:'doe'}],
+  'Transportation & Env.': [{n:'Dept. of Transportation',v:15422,k:'fdot'},{n:'Agriculture & Consumer Svcs.',v:2781,k:'dacs'},{n:'Environmental Protection',v:2390,k:'dep'},{n:'Fish & Wildlife Conservation',v:602,k:'fwc'}],
+  'Criminal Justice':      [{n:'Dept. of Corrections',v:4301,k:'fdc'},{n:'Justice Administration',v:1388,k:'ja'},{n:'Dept. of Juvenile Justice',v:890,k:'djj'},{n:'Law Enforcement (FDLE)',v:478,k:'fdle'},{n:'Legal Affairs (AG)',v:388,k:'lag'}],
+  'General Government':    [{n:'Commerce (DEO)',v:1617,k:'deo'},{n:'Management Services',v:845,k:'dms'},{n:'Revenue',v:768,k:'dor'},{n:'Highway Safety & Motor Vehicles',v:698,k:'hsmv'},{n:'Administered Funds',v:690,k:'af'}],
+  'Judicial Branch':       [{n:'State Court System',v:820,k:'courts'}],
+  'Other / Administered':  [{n:'Governor\'s Office',v:306,k:'gov'},{n:'Legislature',v:0,k:'leg'}],
+};
+
+const DEPT_PROGRAMS={
+  ahca:[
+    {n:'Health Care Services',v:37430,d:'Medicaid managed care, fee-for-service, and waiver programs covering 5+ million Floridians. Florida\'s largest single program.'},
+    {n:'Health Care Regulation',v:87,d:'Licensing and oversight of health care facilities, HMOs, and managed care plans statewide.'},
+    {n:'Administration & Support',v:40,d:'Agency administration, data systems, and program integrity operations.'},
+  ],
+  doe:[
+    {n:'FEFP — K-12 School Aid',v:16628,d:'Florida Education Finance Program — primary state aid formula for K-12 public schools. $9,406 per student FY26-27.'},
+    {n:'Educational & General (SUS)',v:4789,d:'State University System operating support across 12 universities including UF, FSU, UCF, USF, and others.'},
+    {n:'Federal Grants K-12',v:2556,d:'Title I, IDEA, and other federal education grants administered through DOE.'},
+    {n:'Florida College System',v:1881,d:'Operating support for Florida\'s 28 state colleges. $1.86B in state + tuition FY26-27.'},
+    {n:'Education Capital Outlay',v:1715,d:'School hardening, maintenance, charter school facilities, and university construction.'},
+    {n:'Early Learning / VPK',v:1707,d:'Voluntary Pre-K ($483M), School Readiness ($1.1B) — early childhood education programs.'},
+  ],
+  fdot:[
+    {n:'Highway Operations',v:9520,d:'Interstate, U.S., and state road maintenance, operations, and improvements across Florida.'},
+    {n:'Transportation Systems Dev.',v:3287,d:'New road construction, bridge improvements, and multimodal transportation projects.'},
+    {n:'Florida\'s Turnpike System',v:2525,d:'Operations and capital improvements for 500+ miles of Florida toll roads.'},
+    {n:'Aviation & Transit Support',v:90,d:'Airport improvement grants and public transit operating assistance.'},
+  ],
+  fdc:[
+    {n:'Security & Institutional Ops.',v:2826,d:'Operations of 50+ correctional facilities housing ~80,000 inmates. 500 new FTE in FY26-27.'},
+    {n:'Health Services',v:796,d:'Medical, mental health, and dental care for incarcerated individuals.'},
+    {n:'Correctional Facility Construction',v:56,d:'New facility construction and major renovation projects.'},
+    {n:'Community Corrections',v:304,d:'Probation, parole supervision, and community-based sanctions programs.'},
+  ],
+  dcf:[
+    {n:'Family Safety Program',v:2143,d:'Child welfare, foster care, adoption, and child protective investigations.'},
+    {n:'Community Services',v:1339,d:'Community mental health, substance abuse treatment, and homelessness services.'},
+    {n:'Mental Health Program',v:583,d:'State mental health facilities, Baker Act services, and community mental health grants.'},
+    {n:'Economic Self-Sufficiency',v:579,d:'SNAP, TANF, Medicaid eligibility determination, and refugee assistance programs.'},
+  ],
+  doh:[
+    {n:'Community Public Health',v:3505,d:'County health departments, epidemiology, immunizations, and public health programs statewide.'},
+    {n:'Children\'s Medical Services',v:210,d:'Specialized pediatric care for children with special health care needs.'},
+    {n:'Cancer Initiatives',v:278,d:'Casey DeSantis Cancer Innovation Fund ($197.5M) and Cancer Connect Collaborative Incubator ($10M).'},
+    {n:'Behavioral Health Services',v:159,d:'Mental health and substance use treatment programs across Florida communities.'},
+  ],
+  apd:[
+    {n:'Services to Persons w/ Disabilities',v:1302,d:'iBudget Waiver and related services for 30,000+ Floridians with developmental disabilities. +$20M in FY26-27.'},
+  ],
+  ea:[
+    {n:'Services to Elders',v:487,d:'Home and community-based care, Alzheimer\'s programs, and senior support services. $204M total with $3M Alzheimer\'s Initiative.'},
+  ],
+  dacs:[
+    {n:'Agricultural Economic Development',v:1959,d:'Farm programs, agricultural research, pest control, and food safety programs.'},
+    {n:'Everglades Restoration',v:810,d:'Eight-year total: $9.4B. FY26-27 Everglades restoration programs exceeding Governor\'s $6B goal.'},
+    {n:'Water Quality Programs',v:408,d:'Targeted water quality improvements including Indian River Lagoon and Biscayne Bay protection.'},
+  ],
+  dep:[
+    {n:'Water Policy & Ecosystems',v:908,d:'Everglades, springs, and waterway restoration programs across Florida.'},
+    {n:'Resilient Florida',v:202,d:'Flooding and sea level rise adaptation grants for local governments.'},
+    {n:'Florida Forever',v:150,d:'Land acquisition for conservation, recreation, and water resource protection.'},
+    {n:'Contaminated Site Cleanup',v:221,d:'Cleanup of petroleum and dry-cleaning contaminated sites statewide.'},
+  ],
+  djj:[
+    {n:'Residential Corrections',v:333,d:'Secure and non-secure residential programs for juvenile offenders.'},
+    {n:'Juvenile Detention',v:214,d:'Pre-adjudicatory and post-commitment detention facilities statewide.'},
+    {n:'Probation & Community Corrections',v:187,d:'Supervision and services for youth in the community.'},
+    {n:'Florida Scholars Academy',v:3.7,d:'Academic program for detained youth to earn high school diplomas.'},
+  ],
+  fdle:[
+    {n:'Investigations & Forensic Science',v:289,d:'FDLE statewide criminal investigations and crime lab services.'},
+    {n:'Criminal Justice Information',v:102,d:'Florida crime data systems, background checks, and fingerprinting.'},
+    {n:'S.A.F.E. Fentanyl Eradication',v:15,d:'State Assistance for Fentanyl Eradication — new FY26-27 initiative targeting opioid trafficking.'},
+  ],
+  deo:[
+    {n:'Community Development',v:801,d:'Affordable housing (SAIL, SHIP, Hometown Heroes $293.7M), community development programs.'},
+    {n:'Workforce Services',v:541,d:'CareerSource Florida employment and training programs.'},
+    {n:'VISIT Florida',v:80,d:'State tourism marketing program attracting visitors and supporting the $100B+ tourism industry.'},
+    {n:'Florida Job Growth Grant',v:50,d:'Grants for public infrastructure and workforce training to support job creation.'},
+  ],
+  dor:[
+    {n:'Tax Administration',v:768,d:'Collection of all state taxes, audits, enforcement, and taxpayer services across 67 counties.'},
+  ],
+  courts:[
+    {n:'State Court Operations',v:820,d:'Circuit and county court operations, judges, clerks, and administrative support statewide.'},
+  ],
+};
+
+// ── FLOW DATA ────────────────────────────────────────────────────────────────
+const FLOW_SOURCES=[
+  {n:'General Revenue', amt:53310, pct:45.4, c:'#003087', pctTot:'$53.3B · 45.4% of total',
+   rev:['Sales & Use Tax: ~$38.97B (73% of GR)','Corporate Income Tax: ~$4.79B (9%)','Documentary Stamp Tax: ~$3.46B (6.5%)','Communications Services Tax: ~$1.50B','No state personal income tax — Florida\'s competitive advantage'],
+   exp:[{n:'Education (GR)',v:23738,c:'#003087'},{n:'Health & Human Svcs (GR)',v:18916,c:'#F97316'},{n:'Criminal Justice (GR)',v:6510,c:'#DC2626'},{n:'General Govt (GR)',v:2374,c:'#7C3AED'},{n:'Judicial (GR)',v:1772,c:'#94A3B8'}],
+   note:'Florida\'s General Revenue is funded almost entirely by sales taxes — NO state personal income tax. The $7.76B GR ending balance and AAA credit rating reflect strong fiscal management.'},
+  {n:'Federal Funds', amt:35272, pct:30.1, c:'#F97316', pctTot:'$35.3B · 30.1% of total',
+   rev:['Medicaid FMAP federal match (~$24B via AHCA)','Federal Highway Administration (FHWA) grants','Title I / IDEA education federal grants','SNAP, TANF, Child Welfare federal funding','Federal Grants Trust Fund + other federal programs'],
+   exp:[{n:'Health Care Admin.',v:24180,c:'#F97316'},{n:'Transportation',v:5298,c:'#0EA5A0'},{n:'Education',v:4141,c:'#003087'},{n:'Commerce / Community Dev.',v:1180,c:'#7C3AED'},{n:'Other',v:473,c:'#94A3B8'}],
+   note:'All federal dollars flowing through Florida agencies. Medicaid federal match alone exceeds $24B — Florida\'s FMAP of ~55% means the federal government pays more than half of Medicaid costs.'},
+  {n:'State Trust Funds', amt:28776, pct:24.5, c:'#0EA5A0', pctTot:'$28.8B · 24.5% of total',
+   rev:['Lottery proceeds → Education Enhancement Trust Fund ($2.4B)','Motor fuel taxes → State Transportation Trust Fund','Documentary stamp allocations (land acquisition, housing)','State Medicaid matching funds','Provider assessment funds, licensing fees, and 100+ dedicated program trust funds'],
+   exp:[{n:'Transportation',v:12000,c:'#0EA5A0'},{n:'Health & Human Svcs (match)',v:9000,c:'#F97316'},{n:'Education (trust)',v:3500,c:'#003087'},{n:'Environment & Land',v:2000,c:'#059669'},{n:'Other programs',v:2276,c:'#94A3B8'}],
+   note:'State Trust Funds are dedicated-purpose funds that cannot be freely redirected by the Legislature. They include lottery-funded education, motor fuel tax-funded transportation, and Medicaid state matching dollars.'},
+];
+let activeFlow=null;
+
+function buildFlowMain(){
+  const fw=document.getElementById('flowMain');
+  fw.innerHTML='';
+  const SRC=FLOW_SOURCES;
+  const EXP=[
+    {n:'Health & Human Svcs',v:48583,c:'#F97316'},
+    {n:'Education',v:32521,c:'#003087'},
+    {n:'Transportation & Env.',v:21195,c:'#0EA5A0'},
+    {n:'Criminal Justice',v:7464,c:'#DC2626'},
+    {n:'General Govt + Other',v:7789,c:'#7C3AED'},
+  ];
+  const expTot=EXP.reduce((a,b)=>a+b.v,0);
+  let ex=0; EXP.forEach(e=>{e.x0=ex;e.pct=e.v/expTot*100;ex+=e.pct;});
+  const W=680,H=420,GAP=3,PW=660;
+  function px(p){return p/100*PW;}
+
+  // Note: for flow diagram, we display by pct of total using the 4 source types
+  // But pct values don't add up to 100 because GR and Federal/Trust overlap
+  // Let's normalize: Trust 51.6% + Federal 29.8% + GR 45.4% + Other 18.6% = 145.4% (overlapping)
+  // Use PDF-based fund types instead: GR 45.4%, Federal 29.8%, Trust 51.6-45.4-29.8=... doesn't work
+  // Better: use actual non-overlapping % from Excel:
+  // GR: 53310/117360 = 45.4% BUT this is counted in above too
+  // Let's just use the 4 fund types as presented visually, distributing 100%:
+  // Trust: 51.6, Federal: 29.8, Other: 18.6 = 100 total (GR is subset of Trust+Other)
+  // Actually use simple display: Trust=51.6, Federal=29.8, Other=18.6 → total 100% but labels clarify
+  const DISP=[
+    {i:0,n:'General Revenue', amt:53310,pct:45.4,c:'#003087',x0:0},
+    {i:1,n:'Federal Funds',   amt:35272,pct:30.1,c:'#F97316',x0:45.4},
+    {i:2,n:'State Trust Funds',amt:28776,pct:24.5,c:'#0EA5A0',x0:75.5},
+  ];
+
+  let svgHTML=`<svg width="100%" viewBox="0 0 ${W} ${H}" style="display:block;overflow:visible;">
+  <text x="340" y="18" text-anchor="middle" fill="#94A3B8" font-size="9" font-weight="600" font-family="'DM Sans',sans-serif" letter-spacing="1.2">— WHERE THE MONEY COMES FROM — CLICK A SOURCE TO DRILL DOWN —</text>`;
+
+  let sx=10;
+  DISP.forEach((s,i)=>{
+    const sw=px(s.pct)-GAP;
+    const cx=sx+sw/2;
+    const bandCx=10+(s.x0/100)*PW;
+    const bandCw=px(s.pct)-GAP;
+    svgHTML+=`<g class="node" id="fseg${i}" onclick="drillFlow(${i})" style="cursor:pointer;">
+      <rect x="${sx}" y="24" width="${sw}" height="44" rx="4" fill="${s.c}" opacity="0.92"/>
+      ${sw>80?`<text x="${cx}" y="41" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="'DM Sans',sans-serif">${s.n}</text>
+      <text x="${cx}" y="55" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9" font-family="'DM Sans',sans-serif">$${(s.amt/1000).toFixed(0)}B</text>`
+      :`<text x="${cx}" y="46" text-anchor="middle" dominant-baseline="central" fill="white" font-size="9" font-family="'DM Sans',sans-serif">$${(s.amt/1000).toFixed(0)}B</text>`}
+    </g>`;
+    svgHTML+=`<path d="M ${sx} 68 L ${sx} 88 C ${sx} 160, ${bandCx} 160, ${bandCx} 160 L ${bandCx+bandCw} 160 C ${bandCx+bandCw} 160, ${sx+sw} 160, ${sx+sw} 88 L ${sx+sw} 68 Z" fill="${s.c}" opacity="0.14" style="pointer-events:none;"/>`;
+    sx+=sw+GAP;
+  });
+
+  svgHTML+=`<rect x="10" y="160" width="${PW}" height="38" fill="#1E3A5F"/>
+  <text x="340" y="179" text-anchor="middle" dominant-baseline="central" fill="white" font-size="13" font-weight="700" font-family="'DM Sans',sans-serif">ALL FUNDS = $117.4B · FLORIDA · FY 2026-27</text>`;
+
+  let ex2=10;
+  EXP.forEach(e=>{
+    const ew=px(e.pct)-GAP;
+    const ecx=ex2+ew/2;
+    const bx=10+(e.x0/100)*PW;
+    const bw=px(e.pct)-GAP;
+    // Short labels for small bars
+    const shortN=e.n.replace('Transportation & Env.','Transp. & Env.').replace('General Govt + Other','Gen. Govt & Other');
+    svgHTML+=`<path d="M ${bx} 198 L ${bx} 218 C ${bx} 260, ${ex2} 260, ${ex2} 260 L ${ex2+ew} 260 C ${ex2+ew} 260, ${bx+bw} 260, ${bx+bw} 218 L ${bx+bw} 198 Z" fill="${e.c}" opacity="0.15" style="pointer-events:none;"/>`;
+    svgHTML+=`<rect x="${ex2}" y="260" width="${ew}" height="44" rx="4" fill="${e.c}"/>`;
+    if(ew>90){
+      // Full label — two lines
+      svgHTML+=`<text x="${ecx}" y="277" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="'DM Sans',sans-serif">${e.n}</text>
+      <text x="${ecx}" y="291" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9" font-family="'DM Sans',sans-serif">$${(e.v/1000).toFixed(0)}B · ${e.pct.toFixed(0)}%</text>`;
+    } else if(ew>44){
+      // Medium — rotated vertical text to fit
+      svgHTML+=`<text transform="translate(${ecx},282) rotate(-90)" text-anchor="middle" dominant-baseline="central" fill="white" font-size="8" font-weight="600" font-family="'DM Sans',sans-serif">${shortN} $${(e.v/1000).toFixed(0)}B</text>`;
+    } else {
+      // Tiny — just amount
+      svgHTML+=`<text x="${ecx}" y="282" text-anchor="middle" dominant-baseline="central" fill="white" font-size="8" font-family="'DM Sans',sans-serif">$${(e.v/1000).toFixed(0)}B</text>`;
+    }
+    // Label below the bar ONLY for small bars where name isn't readable inside
+    if(ew<=90){
+      svgHTML+=`<text x="${ecx}" y="318" text-anchor="middle" fill="#475569" font-size="8.5" font-family="'DM Sans',sans-serif">${shortN}</text>`;
+    }
+    ex2+=ew+GAP;
+  });
+
+  svgHTML+=`
+  <text x="340" y="340" text-anchor="middle" fill="#94A3B8" font-size="9" font-weight="600" font-family="'DM Sans',sans-serif" letter-spacing="1.2">— WHERE THE MONEY GOES —</text>
+  <text x="340" y="358" text-anchor="middle" fill="#CBD5E1" font-size="8" font-family="'DM Sans',sans-serif">No state income tax · Sales &amp; Use Tax 73% of GR · Federal Medicaid match ~$24B · AAA Credit Rating · $5B Rainy Day Fund (BSF)</text>
+  </svg>`;
+  fw.innerHTML=svgHTML;
+  FLOW_SOURCES.forEach((s,i)=>{
+    const seg=document.getElementById('fseg'+i);
+    if(!seg) return;
+    const rect=seg.querySelector('rect');
+    seg.addEventListener('mouseenter',()=>{if(activeFlow!==i&&rect)rect.setAttribute('opacity','1');});
+    seg.addEventListener('mouseleave',()=>{if(activeFlow!==i&&rect)rect.setAttribute('opacity','0.92');});
+  });
+}
+
+function drillFlow(i){
+  const s=FLOW_SOURCES[i];
+  activeFlow=i;
+  document.getElementById('flowResetBtn').style.display='inline-flex';
+  FLOW_SOURCES.forEach((_,j)=>{
+    const seg=document.getElementById('fseg'+j);
+    if(!seg) return;
+    const rect=seg.querySelector('rect');
+    if(rect){rect.setAttribute('opacity',j===i?'1':'0.25');if(j===i){seg.style.filter=`drop-shadow(0 4px 12px ${s.c}66)`;}else{seg.style.filter='';}}
+  });
+  const panel=document.getElementById('flowDrill');
+  const expTot=s.exp.reduce((a,b)=>a+b.v,0);
+  const revList=s.rev.map(r=>`<li style="margin-bottom:3px;font-size:11px;color:var(--muted);display:flex;gap:6px;"><span style="color:${s.c}">›</span>${r}</li>`).join('');
+  const expBars=s.exp.map(e=>{
+    const ep=(e.v/s.amt*100).toFixed(1);
+    const etp=(e.v/117360*100).toFixed(1);
+    return `<div style="margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+        <span style="font-size:11px;font-weight:500;display:flex;align-items:center;gap:5px;"><span style="width:8px;height:8px;border-radius:2px;background:${e.c};display:inline-block;"></span>${e.n}</span>
+        <span style="font-size:11px;color:var(--muted);">$${(e.v/1000).toFixed(1)}B · <strong style="color:${e.c}">${ep}% of fund</strong> · ${etp}% of total</span>
+      </div>
+      <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden;"><div style="width:${ep}%;height:100%;background:${e.c};border-radius:4px;transition:width 1s ease;"></div></div>
+    </div>`;
+  }).join('');
+  panel.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+    <div style="padding:16px 18px;border-right:1px solid var(--border);border-left:4px solid ${s.c};">
+      <div style="font-size:10px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Revenue Sources</div>
+      <div style="font-size:22px;font-weight:700;color:${s.c};margin-bottom:2px;">$${(s.amt/1000).toFixed(1)}B</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">${s.pctTot}</div>
+      <ul style="list-style:none;padding:0;">${revList}</ul>
+      <div style="font-size:10px;color:var(--faint);margin-top:8px;line-height:1.5;">${s.note}</div>
+    </div>
+    <div style="padding:16px 18px;">
+      <div style="font-size:10px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">${s.n} — Expenditure Breakdown</div>
+      ${expBars}
+    </div>
+  </div>`;
+  panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function resetFlow(){
+  activeFlow=null;
+  document.getElementById('flowResetBtn').style.display='none';
+  document.getElementById('flowDrill').style.display='none';
+  FLOW_SOURCES.forEach((_,j)=>{
+    const seg=document.getElementById('fseg'+j);
+    if(!seg) return;
+    const rect=seg.querySelector('rect');
+    if(rect){rect.setAttribute('opacity','0.92');}
+    seg.style.filter='';
+  });
+}
+
+buildFlowMain();
+
+function toggleDark(){
+  const dark=document.body.classList.toggle('dark');
+  const b=document.getElementById('dmBtn');
+  b.textContent=dark?'☀ Light Mode':'🌙 Dark Mode';
+  b.classList.toggle('dm-on',dark);
+}
+
+function setAgView(v,btn){
+  document.getElementById('agTabs').querySelectorAll('.ctab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('agAllWrap').style.display=v==='all'?'':'none';
+  document.getElementById('agGfWrap').style.display=v==='gf'?'':'none';
+  document.getElementById('agFfWrap').style.display=v==='ff'?'':'none';
+  document.getElementById('agTfWrap').style.display=v==='tf'?'':'none';
+  document.getElementById('agYoyWrap').style.display=v==='yoy'?'':'none';
+}
+
+// ── BUILD CHARTS ─────────────────────────────────────────────────────────────
+const TOpts={backgroundColor:'#1E3A5F',titleColor:'#fff',bodyColor:'rgba(255,255,255,.7)',padding:10,cornerRadius:8};
+
+// 1. Budget Trend
+const tCtx=document.getElementById('trendChart').getContext('2d');
+const tGrad=tCtx.createLinearGradient(0,0,0,260);
+tGrad.addColorStop(0,'rgba(249,115,22,.20)');tGrad.addColorStop(1,'rgba(249,115,22,.01)');
+tRef=new Chart(tCtx,{type:'line',data:{labels:['FY19-20','FY20-21','FY21-22','FY22-23','FY23-24','FY24-25','FY25-26','FY26-27'],datasets:[{label:'Budget ($B)',data:[91.5,101.3,106.0,118.5,122.5,122.5,116.1,117.4],borderColor:'#F97316',borderWidth:2.5,backgroundColor:tGrad,tension:0.35,fill:true,pointBackgroundColor:'#F97316',pointBorderColor:'#fff',pointBorderWidth:[2,2,2,2,2,2,2,3],pointRadius:[5,5,5,5,5,5,5,11]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOpts,callbacks:{label:c=>` $${c.parsed.y.toFixed(1)}B all-funds`}}},scales:{y:{min:80,max:135,ticks:{callback:v=>'$'+v+'B',font:{size:10}},grid:{color:'#F1F5F9'}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+
+// 2. Sector Deep Dive
+const TOTAL_FL=117360;
+let activeSector=null;
+const drillWrap=document.getElementById('sectorDrillWrap');
+const drillDetail=document.getElementById('sectorDrillDetail');
+const sectorTot=SC26.reduce((a,b)=>a+b,0);
+
+const tHdr=document.createElement('div');
+tHdr.style.cssText='display:flex;align-items:center;gap:10px;padding:4px 6px 6px;border-bottom:2px solid var(--border);margin-bottom:4px;';
+tHdr.innerHTML=`<span style="width:9px;flex-shrink:0;"></span><span style="font-size:9px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;flex:1;">Sector</span><span style="font-size:9px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;width:54px;text-align:right;">Amount</span><span style="font-size:9px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;width:54px;text-align:right;">% Total</span><span style="width:16px;"></span>`;
+drillWrap.appendChild(tHdr);
+
+function buildDeptRow(d,di,depts,s,v){
+  const dp=(d.v/v*100).toFixed(1);
+  const maxD=depts[0]?depts[0].v:1;
+  const bw=Math.min((d.v/maxD)*100,100);
+  const progs=DEPT_PROGRAMS[d.k]||[];
+  const hasProgs=progs.length>0;
+  return `<div id="drow_${d.k}" style="border-bottom:1px solid var(--border)${di===depts.length-1&&!hasProgs?';border-bottom:none':''};">
+    <div onclick="toggleProgs('${d.k}','${s.c}')" style="display:flex;align-items:center;gap:10px;padding:7px 10px 7px 22px;cursor:${hasProgs?'pointer':'default'};background:${di%2===0?'var(--bg)':'var(--card)'};transition:background .15s;" onmouseenter="if(${hasProgs})this.style.background='${s.c}0D'" onmouseleave="this.style.background='${di%2===0?'var(--bg)':'var(--card)'}'">
+      <div style="width:4px;height:4px;border-radius:50%;background:${s.c};flex-shrink:0;"></div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:11px;font-weight:500;color:var(--text);margin-bottom:3px;">${d.n}${hasProgs?'':' <span style="font-size:9px;color:var(--faint);">(no programs yet)</span>'}</div>
+        <div style="height:4px;background:${s.c}22;border-radius:2px;overflow:hidden;"><div style="width:${bw}%;height:100%;background:${s.c};border-radius:2px;"></div></div>
+      </div>
+      <span style="font-size:11px;font-weight:600;color:var(--navy);width:60px;text-align:right;font-variant-numeric:tabular-nums;">$${d.v>=1000?(d.v/1000).toFixed(0)+'B':Math.round(d.v)+'M'}</span>
+      <span style="font-size:10px;color:${s.c};width:44px;text-align:right;">${dp}%</span>
+      <span style="font-size:13px;color:var(--faint);width:16px;text-align:center;transition:transform .2s;" id="parrow_${d.k}">${hasProgs?'›':''}</span>
+    </div>
+    <div id="progpanel_${d.k}" style="display:none;border-top:1px solid ${s.c}22;background:${s.c}06;">
+      ${progs.map((p,pi)=>{
+        const pp=(p.v/d.v*100).toFixed(1);
+        return `<div style="display:flex;align-items:flex-start;gap:8px;padding:6px 14px 6px 36px;border-bottom:1px solid var(--border)${pi===progs.length-1?';border-bottom:none':''};">
+          <div style="width:3px;height:3px;border-radius:50%;background:${s.c}88;flex-shrink:0;margin-top:5px;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:11px;font-weight:600;color:var(--text);">${p.n}</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px;line-height:1.4;">${p.d}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div style="font-size:11px;font-weight:600;color:var(--navy);font-variant-numeric:tabular-nums;">$${p.v>=1000?(p.v/1000).toFixed(0)+'B':Math.round(p.v)+'M'}</div>
+            <div style="font-size:9px;color:${s.c};">${pp}%</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+function toggleProgs(key,color){
+  const panel=document.getElementById('progpanel_'+key);
+  const arrow=document.getElementById('parrow_'+key);
+  if(!panel) return;
+  const open=panel.style.display==='block';
+  panel.style.display=open?'none':'block';
+  if(arrow) arrow.style.transform=open?'rotate(0deg)':'rotate(90deg)';
+}
+
+SC.forEach((s,i)=>{
+  const v=SC26[i];
+  const pct=(v/sectorTot*100).toFixed(1);
+  const barW=Math.min((v/sectorTot)*100*1.8,100);
+  const row=document.createElement('div');
+  row.style.cssText='display:flex;align-items:center;gap:10px;padding:6px 6px;border-radius:6px;cursor:pointer;transition:background .15s;margin-bottom:1px;';
+  row.innerHTML=`
+    <span style="width:9px;height:9px;border-radius:2px;background:${s.c};flex-shrink:0;display:inline-block;"></span>
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;">${s.n}</div>
+      <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:${barW}%;height:100%;background:${s.c};border-radius:3px;"></div></div>
+    </div>
+    <span style="font-size:11px;font-weight:600;color:var(--navy);width:54px;text-align:right;font-variant-numeric:tabular-nums;">$${(v/1000).toFixed(0)}B</span>
+    <span style="font-size:11px;font-weight:600;color:${s.c};width:44px;text-align:right;">${pct}%</span>
+    <span style="font-size:13px;color:var(--faint);width:12px;text-align:center;transition:transform .2s;" id="sarrow${i}">›</span>`;
+  row.onmouseenter=()=>{if(activeSector!==s.n)row.style.background='var(--bg)';};
+  row.onmouseleave=()=>{if(activeSector!==s.n)row.style.background='transparent';};
+  row.onclick=()=>{
+    if(activeSector===s.n){
+      activeSector=null;drillDetail.style.display='none';
+      drillWrap.querySelectorAll('[data-srow]').forEach(r=>{r.style.opacity='1';r.style.background='transparent';});
+      document.querySelectorAll('[id^="sarrow"]').forEach(a=>a.style.transform='rotate(0deg)');
+      return;
+    }
+    activeSector=s.n;
+    drillWrap.querySelectorAll('[data-srow]').forEach(r=>{r.style.opacity=r.dataset.srow===s.n?'1':'0.45';r.style.background=r.dataset.srow===s.n?s.c+'10':'transparent';});
+    document.querySelectorAll('[id^="sarrow"]').forEach((a,j)=>a.style.transform=j===i?'rotate(90deg)':'rotate(0deg)');
+    const depts=SECTOR_DEPTS[s.n]||[];
+    drillDetail.innerHTML=`
+      <div style="padding:10px 12px 6px;border-left:4px solid ${s.c};background:${s.c}08;">
+        <div style="font-size:12px;font-weight:700;color:var(--navy);">${s.n} — Agencies & Programs</div>
+        <div style="font-size:10px;color:var(--muted);">$${(v/1000).toFixed(0)}B total · FY2026-27 proposed · click an agency to see its programs</div>
+      </div>
+      <div style="display:flex;padding:5px 10px 5px 22px;border-bottom:1px solid var(--border);background:var(--bg);">
+        <span style="font-size:9px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;flex:1;">Agency › Programs</span>
+        <span style="font-size:9px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;width:60px;text-align:right;">Budget</span>
+        <span style="font-size:9px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;width:44px;text-align:right;">% Sector</span>
+        <span style="width:16px;"></span>
+      </div>
+      ${depts.map((d,di)=>buildDeptRow(d,di,depts,s,v)).join('')}`;
+    drillDetail.style.display='block';
+    drillDetail.scrollIntoView({behavior:'smooth',block:'nearest'});
+  };
+  row.dataset.srow=s.n;
+  drillWrap.appendChild(row);
+});
+
+// 3. Agency All-Funds Bar
+new Chart(document.getElementById('agAllBar').getContext('2d'),{type:'bar',
+  data:{labels:AG_ALL.map(d=>d.n),datasets:[{data:AG_ALL.map(d=>d.v/1000),backgroundColor:AG_ALL.map(d=>d.c+'CC'),borderColor:AG_ALL.map(d=>d.c),borderWidth:1,borderRadius:4}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOpts,callbacks:{label:c=>` $${c.parsed.x.toFixed(1)}B (all funds)`}}},
+    scales:{x:{ticks:{callback:v=>'$'+v+'B',font:{size:10}},grid:{color:'#F1F5F9'}},y:{ticks:{font:{size:11}},grid:{display:false}}}}});
+
+// 4. GR Bar
+new Chart(document.getElementById('agBar').getContext('2d'),{type:'bar',
+  data:{labels:AG.map(d=>d.n),datasets:[{data:AG.map(d=>d.v),backgroundColor:AG.map(d=>d.c+'CC'),borderColor:AG.map(d=>d.c),borderWidth:1,borderRadius:4}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOpts,callbacks:{label:c=>` $${Math.round(c.parsed.x).toLocaleString()}M (General Revenue)`}}},
+    scales:{x:{ticks:{callback:v=>'$'+v+'M',font:{size:10}},grid:{color:'#F1F5F9'}},y:{ticks:{font:{size:11}},grid:{display:false}}}}});
+
+// 5. Federal Bar
+new Chart(document.getElementById('agFfBar').getContext('2d'),{type:'bar',
+  data:{labels:AG_FF.map(d=>d.n),datasets:[{data:AG_FF.map(d=>d.v),backgroundColor:AG_FF.map(d=>d.c+'CC'),borderColor:AG_FF.map(d=>d.c),borderWidth:1,borderRadius:4}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOpts,callbacks:{label:c=>` $${Math.round(c.parsed.x).toLocaleString()}M est. (Federal Funds)`}}},
+    scales:{x:{ticks:{callback:v=>'$'+v+'M',font:{size:10}},grid:{color:'#F1F5F9'}},y:{ticks:{font:{size:11}},grid:{display:false}}}}});
+
+// 5b. State Trust Funds top 10 (lottery, fuel taxes, matching, dedicated funds)
+const AG_TF=[
+  {n:'Dept. of Transportation',         v:12000, c:'#0EA5A0'},
+  {n:'Agency for Health Care Admin.',   v:9000,  c:'#F97316'},
+  {n:'Dept. of Education',              v:3500,  c:'#003087'},
+  {n:'Environmental Protection',        v:1800,  c:'#059669'},
+  {n:'Agriculture & Consumer Svcs.',    v:1400,  c:'#0EA5A0'},
+  {n:'Commerce (DEO)',                   v:900,   c:'#7C3AED'},
+  {n:'Dept. of Children & Families',    v:700,   c:'#F97316'},
+  {n:'Management Services',             v:500,   c:'#64748B'},
+  {n:'Dept. of Health',                 v:480,   c:'#F97316'},
+  {n:'Fish & Wildlife Conservation',    v:400,   c:'#059669'},
+];
+new Chart(document.getElementById('agTfBar').getContext('2d'),{type:'bar',
+  data:{labels:AG_TF.map(d=>d.n),datasets:[{data:AG_TF.map(d=>d.v),backgroundColor:AG_TF.map(d=>d.c+'CC'),borderColor:AG_TF.map(d=>d.c),borderWidth:1,borderRadius:4}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{...TOpts,callbacks:{label:c=>` $${Math.round(c.parsed.x).toLocaleString()}M est. (State Trust Funds)`,footer:()=>['Includes lottery, fuel taxes, Medicaid match, dedicated program trust funds']}}},
+    scales:{x:{ticks:{callback:v=>'$'+v+'M',font:{size:10}},grid:{color:'#F1F5F9'}},y:{ticks:{font:{size:11}},grid:{display:false}}}}});
+
+// 6. YoY Bar
+const yDelta=AG.map(d=>+(d.v-d.v25).toFixed(0));
+new Chart(document.getElementById('agYoyBar').getContext('2d'),{type:'bar',
+  data:{labels:AG.map(d=>d.n),datasets:[{label:'$ Change',data:yDelta,backgroundColor:yDelta.map(v=>v>=0?'#05966977':'#DC262677'),borderColor:yDelta.map(v=>v>=0?'#059669':'#DC2626'),borderWidth:1,borderRadius:4}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOpts,callbacks:{label:c=>{const v=c.parsed.x,pct=((v/AG[c.dataIndex].v25)*100).toFixed(1);return ` ${v>=0?'+':''}$${v.toLocaleString()}M (${v>=0?'+':''}${pct}%)`;},title:c=>`${c[0].label}: FY25-26 → FY26-27`}}},
+    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'M',font:{size:10}},grid:{color:'#F1F5F9'}},y:{ticks:{font:{size:11}},grid:{display:false}}}}});
+
+// 7. GF Revenue Treemap
+const tm=document.getElementById('revTreemap');
+tm.style.cssText='height:240px;border-radius:8px;overflow:hidden;display:flex;gap:2px;';
+let activeRev=null;
+
+function buildTile(idx, style){
+  const d=RV_TREE[idx];
+  const t=document.createElement('div');
+  t.id=`rtile${idx}`;
+  t.style.cssText=`${style}background:${d.c};border-radius:4px;display:flex;flex-direction:column;justify-content:flex-end;padding:10px;cursor:pointer;transition:all .2s;overflow:hidden;`;
+  t.innerHTML=`
+    <div style="font-size:${idx<2?'22':'16'}px;font-weight:700;color:${d.ct};line-height:1;margin-bottom:3px;">${d.v}%</div>
+    <div style="font-size:${idx<2?'11':'9.5'}px;font-weight:600;color:${d.ct};opacity:.9;line-height:1.3;white-space:pre-line;">${d.n}</div>
+    <div style="font-size:${idx<2?'11':'9'}px;color:${d.ct};opacity:.7;margin-top:2px;">${d.amt}</div>`;
+  t.onmouseenter=()=>{if(activeRev!==idx){t.style.filter='brightness(1.12)';t.style.transform='scale(1.01)';}};
+  t.onmouseleave=()=>{if(activeRev!==idx){t.style.filter='';t.style.transform='';}};
+  t.onclick=()=>{
+    const panel=document.getElementById('revDetail');
+    if(activeRev===idx){
+      activeRev=null;panel.style.display='none';
+      [0,1,2,3].forEach(j=>{const el=document.getElementById('rtile'+j);if(el){el.style.opacity='1';el.style.filter='';el.style.transform='';}});
+      return;
+    }
+    activeRev=idx;
+    [0,1,2,3].forEach(j=>{const el=document.getElementById('rtile'+j);if(el){el.style.opacity=j===idx?'1':'0.4';el.style.filter=j===idx?'brightness(1.1)':'';el.style.transform=j===idx?'scale(1.02)':'';}});
+    const facts=d.facts.map(f=>`<li style="margin-bottom:5px;display:flex;gap:6px;"><span style="color:${d.c};flex-shrink:0;">›</span><span>${f}</span></li>`).join('');
+    panel.innerHTML=`<div style="padding:14px 16px;border-left:4px solid ${d.c};">
+      <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:var(--navy);">${d.full}</span>
+        <span style="font-size:18px;font-weight:700;color:${d.c};">${d.amt} · ${d.v}%</span>
+        <span style="font-size:11px;color:#059669;font-weight:500;">${d.trend}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:10px;">${d.desc}</div>
+      <ul style="list-style:none;padding:0;font-size:11px;color:var(--muted);">${facts}</ul>
+    </div>`;
+    panel.style.display='block';
+  };
+  return t;
+}
+
+// Sales Tax (73.2%) left col · right col: Corp (9%) + DocStamp (6.5%) top, Other bottom
+const leftCol=document.createElement('div');
+leftCol.style.cssText='flex:73.2;display:flex;flex-direction:column;';
+leftCol.appendChild(buildTile(0,'flex:1;'));
+const rightCol=document.createElement('div');
+rightCol.style.cssText='flex:26.8;display:flex;flex-direction:column;gap:2px;';
+const rightTop=document.createElement('div');
+rightTop.style.cssText='flex:59.6;display:flex;gap:2px;';
+rightTop.appendChild(buildTile(1,'flex:9.0;'));
+rightTop.appendChild(buildTile(2,'flex:6.5;'));
+rightCol.appendChild(rightTop);
+rightCol.appendChild(buildTile(3,'flex:40.4;'));
+tm.appendChild(leftCol);tm.appendChild(rightCol);
+
+// 8. Fund Tiles
+const FU=[
+  {n:'General Revenue',    v:53310, p:45.4, c:'#003087'},
+  {n:'Federal Funds',      v:35272, p:30.1, c:'#F97316'},
+  {n:'State Trust Funds',  v:28776, p:24.5, c:'#0EA5A0'},
+];
+const FU_DETAIL=[
+  {extra:"Florida's primary discretionary fund. Sales & Use Tax (73%), Corporate Income Tax (9%), Documentary Stamp Tax (6.5%). No state personal income tax. GR ending balance: $7.76B. AAA Credit Rating.",top:'Top recipients: Education · Health & Human Svcs · Criminal Justice · General Govt'},
+  {extra:'All federal dollars through Florida agencies. Medicaid FMAP match (~$24B via AHCA), FHWA highway grants, Title I/IDEA education, SNAP/TANF/Child Welfare, workforce development, and disaster recovery grants.',top:'Top recipients: Health Care Admin. ($24B) · Transportation · Education · Commerce'},
+  {extra:"Dedicated-purpose funds that cannot be freely redirected. Includes lottery-funded Education Enhancement ($2.4B), motor fuel taxes for transportation, documentary stamp land acquisition funds, Medicaid state matching dollars, and 100+ other dedicated program trust funds.",top:'Top recipients: Transportation · Health & Human Svcs (match) · Education · Environment'},
+];
+const FILLS_FL={'#0EA5A0':'E0F7F6','#003087':'E6EBF4','#F97316':'FFF0E6','#7C3AED':'F3EFF9'};
+let activeFund=null;
+const strip=document.getElementById('fundStrip');
+const tiles=document.getElementById('fundTiles');
+FU.forEach((d,i)=>{
+  const seg=document.createElement('div');
+  seg.style.cssText=`flex:${d.p};background:${d.c};transition:opacity .2s;cursor:pointer;`;
+  seg.title=`${d.n}: $${(d.v/1000).toFixed(1)}B`;
+  seg.onclick=()=>selectFund(i);
+  strip.appendChild(seg);
+  const tile=document.createElement('div');
+  tile.id=`ft${i}`;
+  tile.style.cssText=`padding:14px;border-radius:10px;border:2px solid ${d.c}22;cursor:pointer;transition:all .2s;background:var(--card);`;
+  tile.innerHTML=`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="width:10px;height:10px;border-radius:3px;background:${d.c};flex-shrink:0;display:inline-block;"></span><span style="font-size:11px;font-weight:600;color:var(--navy);">${d.n}</span></div>
+    <div style="font-size:22px;font-weight:700;color:${d.c};font-variant-numeric:tabular-nums;margin-bottom:4px;">$${(d.v/1000).toFixed(1)}B</div>
+    <div style="display:flex;align-items:center;gap:6px;"><div style="flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:${Math.min(d.p*1.5,100)}%;height:100%;background:${d.c};border-radius:3px;"></div></div><span style="font-size:11px;font-weight:600;color:${d.c};">${d.p}%</span></div>`;
+  tile.onmouseenter=()=>{if(activeFund!==i){tile.style.borderColor=d.c+'88';tile.style.transform='translateY(-2px)';tile.style.boxShadow=`0 6px 20px ${d.c}22`;}};
+  tile.onmouseleave=()=>{if(activeFund!==i){tile.style.borderColor=d.c+'22';tile.style.transform='';tile.style.boxShadow='';}};
+  tile.onclick=()=>selectFund(i);
+  tiles.appendChild(tile);
+});
+
+function selectFund(i){
+  const d=FU[i];const det=document.getElementById('fundDetail');
+  if(activeFund===i){
+    activeFund=null;det.style.display='none';
+    FU.forEach((_,j)=>{const t=document.getElementById('ft'+j);if(t){t.style.cssText=`padding:14px;border-radius:10px;border:2px solid ${FU[j].c}22;cursor:pointer;transition:all .2s;background:var(--card);`;}strip.children[j].style.opacity='1';});
+    return;
+  }
+  activeFund=i;
+  FU.forEach((_,j)=>{
+    const t=document.getElementById('ft'+j);const isA=j===i;
+    if(t){t.style.cssText=`padding:14px;border-radius:10px;border:2px solid ${FU[j].c}${isA?'':22};cursor:pointer;transition:all .2s;background:var(--card);${isA?`box-shadow:0 6px 20px ${FU[j].c}33;transform:translateY(-2px);border-color:${FU[j].c};`:'opacity:.55;'}`;}
+    strip.children[j].style.opacity=isA?'1':'0.35';
+  });
+  document.getElementById('fdTitle') && (document.getElementById('fdTitle').textContent=`${d.n} — $${(d.v/1000).toFixed(1)}B (${d.p}% of total)`);
+  document.getElementById('fdBody') && (document.getElementById('fdBody').innerHTML=`<strong>${FU_DETAIL[i].top}</strong><br>${FU_DETAIL[i].extra}`);
+  det.style.cssText=`display:block;margin-top:14px;padding:12px 14px;border-radius:8px;border:1px solid var(--border);border-left:4px solid ${d.c};`;
+  det.innerHTML=`<div id="fdTitle" style="font-size:12px;font-weight:600;color:var(--navy);margin-bottom:6px;">${d.n} — $${(d.v/1000).toFixed(1)}B (${d.p}% of total)</div><div id="fdBody" style="font-size:11px;color:var(--muted);line-height:1.6;"><strong>${FU_DETAIL[i].top}</strong><br>${FU_DETAIL[i].extra}</div>`;
+}
+
+// 9. GF Category Rings
+const GC_RING=[
+  {n:'Education',        v:23.7,  pct:44.5, c:'#003087'},
+  {n:'Health & Human Svcs',v:18.9,pct:35.5, c:'#F97316'},
+  {n:'Public Safety',    v:7.2,   pct:13.5, c:'#DC2626'},
+  {n:'All Other',        v:3.4,   pct:6.4,  c:'#0EA5A0'},
+];
+const rings=document.getElementById('gfRings');
+const R=46,CIRC=2*Math.PI*R;
+GC_RING.forEach((d,i)=>{
+  const wrap=document.createElement('div');
+  wrap.style.cssText='display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);transition:box-shadow .2s;';
+  wrap.onmouseenter=()=>wrap.style.boxShadow=`0 4px 16px ${d.c}28`;
+  wrap.onmouseleave=()=>wrap.style.boxShadow='';
+  wrap.innerHTML=`
+    <svg width="104" height="104" viewBox="0 0 104 104" style="flex-shrink:0;">
+      <circle cx="52" cy="52" r="${R}" fill="none" stroke="${d.c}18" stroke-width="9"/>
+      <circle cx="52" cy="52" r="${R}" fill="none" stroke="${d.c}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${CIRC}" stroke-dashoffset="${CIRC}" transform="rotate(-90 52 52)" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1);" id="arc${i}"/>
+      <text x="52" y="46" text-anchor="middle" dominant-baseline="central" style="font-size:15px;font-weight:700;fill:${d.c};font-family:'DM Sans',sans-serif;">${d.pct}%</text>
+      <text x="52" y="62" text-anchor="middle" dominant-baseline="central" style="font-size:10px;fill:var(--muted,#64748B);font-family:'DM Sans',sans-serif;">of GR</text>
+    </svg>
+    <div style="min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:${d.c};font-variant-numeric:tabular-nums;line-height:1;margin-bottom:4px;">$${d.v}B</div>
+      <div style="font-size:11px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:6px;">${d.n}</div>
+      <div style="height:4px;background:${d.c}22;border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;background:${d.c};border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1);" id="bar${i}"></div></div>
+    </div>`;
+  rings.appendChild(wrap);
+});
+setTimeout(()=>{
+  GC_RING.forEach((d,i)=>{
+    const arc=document.getElementById('arc'+i);
+    const bar=document.getElementById('bar'+i);
+    if(arc) arc.style.strokeDashoffset=CIRC*(1-d.pct/100);
+    if(bar) bar.style.width=Math.min(d.pct*2.2,100)+'%';
+  });
+},200);
+
+// 10. Insights
+const IN=[
+  {i:'✓',c:'#059669',t:'AAA Credit Rating + $5B Rainy Day Fund',d:'Florida\'s Budget Stabilization Fund was tripled to the maximum $5 billion. The state maintains the highest credit rating possible — exceeding the U.S. federal government rating. $118M added in FY26-27.'},
+  {i:'📚',c:'#003087',t:'Education: Record $30.6B for K-12',d:'K-12 total funding reaches $30.6B with per-student funding increasing from $9,127 to $9,406 (+3%). Teacher Salary Allocation grows +$201.1M to $1.56B. FEFP Base Student Allocation +$100.'},
+  {i:'🏥',c:'#F97316',t:'Medicaid: $48.6B — 41% of total budget',d:'Agency for Health Care Administration ($37.6B all-funds) covers 5M+ Floridians. Florida FMAP ~55% — federal government matches over half of Medicaid costs. iBudget Waiver +$20M.'},
+  {i:'🌊',c:'#0EA5A0',t:'$9.4B for Everglades & Water Resources',d:'Eight-year total investment exceeds Governor\'s $6B goal. FY26-27: $810M Everglades restoration, $408M water quality, $202M Resilient Florida, $150M Florida Forever land conservation.'},
+  {i:'🚫',c:'#EAB308',t:'No State Income Tax — Florida\'s Advantage',d:'Florida has no state personal income tax. Sales & Use Tax (73% of GR) drives revenue. $9.7B in total tax relief since 2018-19. $35M for 2nd Amendment Sales Tax Holiday in FY26-27.'},
+  {i:'⚠',c:'#7C3AED',t:'Reductions & Efficiencies: $850M',d:'354.5 positions eliminated. $200.3M in GR reductions and $649.7M in trust fund reductions for total $850M in efficiencies. Workforce trimmed from 113,841 (FY24-25) to 112,225 (proposed FY26-27).'},
+];
+const ig=document.getElementById('insights');
+IN.forEach(i=>{const e=document.createElement('div');e.className='insight';e.style.cssText=`border-left-color:${i.c};border-left-width:4px;`;e.innerHTML=`<span class="ins-icon">${i.i}</span><div class="ins-title">${i.t}</div><div class="ins-desc">${i.d}</div>`;ig.appendChild(e);});
+
+// 11. D3 Treemap
+const TM_DATA=[
+  {n:'Agency for Health Care Admin.', short:'AHCA', v:37557, pct:32.0, c:'#F97316', yoy:'+$1,100M (+3.0%)', yoyDir:'up',
+   desc:'Florida\'s largest agency by far. Administers Medicaid managed care for 5M+ Floridians. Leverages FMAP of ~55% to draw $24B in federal match on top of $19B in state funds.',
+   programs:['Health Care Services: $37.4B','Health Care Regulation: $87M','Administration & Support: $40M']},
+  {n:'Dept. of Education', short:'DOE', v:32521, pct:27.7, c:'#003087', yoy:'+$1,500M (+4.8%)', yoyDir:'up',
+   desc:'Oversees K-12, Florida College System (28 colleges), State University System (12 universities), and early childhood education. Total K-12 funding $30.6B for 2.9M+ students.',
+   programs:['FEFP K-12 Aid: $16.6B','State University System: $4.8B','Federal K-12 Grants: $2.6B','Florida Colleges: $1.9B','Capital Outlay: $1.7B']},
+  {n:'Dept. of Transportation', short:'FDOT', v:15422, pct:13.1, c:'#0EA5A0', yoy:'+$200M (+1.3%)', yoyDir:'up',
+   desc:'Manages 12,000+ miles of state highways, 7,000+ bridges, and the Florida Turnpike. FY26-27 Transportation Work Program: $14.3 billion five-year commitment.',
+   programs:['Highway Operations: $9.5B','Transportation Systems Dev.: $3.3B','Florida Turnpike System: $2.5B']},
+  {n:'Dept. of Children & Families', short:'DCF', v:4892, pct:4.2, c:'#F97316', yoy:'+$240M (+5.2%)', yoyDir:'up',
+   desc:'Child protective investigations, foster care, mental health services, substance abuse treatment, and economic self-sufficiency programs statewide.',
+   programs:['Family Safety Program: $2.1B','Community Services: $1.3B','Mental Health Program: $583M','Economic Self-Sufficiency: $579M']},
+  {n:'Dept. of Health', short:'DOH', v:4125, pct:3.5, c:'#F97316', yoy:'+$125M (+3.1%)', yoyDir:'up',
+   desc:'67 county health departments, cancer research initiatives, behavioral health services, and public health programs. Casey DeSantis Cancer Fund: $197.5M.',
+   programs:['Community Public Health: $3.5B','Children\'s Medical Services: $210M','Cancer Initiatives: $278M','Behavioral Health: $159M']},
+  {n:'Dept. of Corrections', short:'FDC', v:4301, pct:3.7, c:'#DC2626', yoy:'+$201M (+4.9%)', yoyDir:'up',
+   desc:'Operates 50+ correctional facilities housing ~80,000 inmates. FY26-27 adds 500 FTE for correctional officers. New facility construction $56.4M.',
+   programs:['Security & Institutional Ops: $2.8B','Health Services: $796M','Community Corrections: $304M','Facility Construction: $56M']},
+  {n:'Agriculture & Consumer Svcs.', short:'DACS', v:2781, pct:2.4, c:'#0EA5A0', yoy:'+$122M (+4.6%)', yoyDir:'up',
+   desc:'Agricultural economic development, food safety, consumer protection, and major environmental programs including Everglades restoration funding.',
+   programs:['Agricultural Econ. Dev.: $2.0B','Everglades Restoration: $810M','Water Quality Programs: $408M']},
+  {n:'Environmental Protection', short:'DEP', v:2390, pct:2.0, c:'#0EA5A0', yoy:'+$50M (+2.1%)', yoyDir:'up',
+   desc:'Environmental permitting, Everglades restoration, springs protection, beach renourishment, contaminated site cleanup, and Florida Forever land acquisition.',
+   programs:['Water Policy & Ecosystems: $908M','Resilient Florida: $202M','Florida Forever: $150M','Contaminated Sites: $221M']},
+  {n:'Justice Administration', short:'JA', v:1388, pct:1.2, c:'#DC2626', yoy:'+$88M (+6.8%)', yoyDir:'up',
+   desc:'Public Defenders, State Attorneys, and criminal justice support programs. Includes funding for Attorney General operations and prosecution of criminal cases.',
+   programs:['State Attorneys: $700M+','Public Defenders: $450M+','Legal Operations: $238M']},
+  {n:'Agency for Persons w/ Disabilities', short:'APD', v:1302, pct:1.1, c:'#F97316', yoy:'+$200M (+18.2%)', yoyDir:'up',
+   desc:'iBudget Waiver services for 30,000+ Floridians with developmental disabilities. FY26-27 adds $20M for expanded services.',
+   programs:['Services to Persons w/ Disabilities: $1.3B']},
+];
+
+let activeTile=null;
+const wrap=document.getElementById('tmapWrap');
+const W=wrap.offsetWidth||900,H=400;
+const tmRoot=d3.hierarchy({children:TM_DATA}).sum(d=>d.v);
+d3.treemap().size([W,H]).paddingInner(3).paddingOuter(3).round(true)(tmRoot);
+const svg=d3.select('#tmapWrap').append('svg').attr('width','100%').attr('height',H).attr('viewBox',`0 0 ${W} ${H}`);
+const cells=svg.selectAll('g').data(tmRoot.leaves()).enter().append('g').attr('transform',d=>`translate(${d.x0},${d.y0})`).style('cursor','pointer');
+cells.append('rect').attr('width',d=>Math.max(0,d.x1-d.x0)).attr('height',d=>Math.max(0,d.y1-d.y0)).attr('rx',4).attr('ry',4).attr('fill',d=>d.data.c).attr('opacity',0.9)
+  .on('mouseover',function(e,d){if(activeTile!==d.data.n)d3.select(this).attr('opacity',1).attr('filter','brightness(1.12)');})
+  .on('mouseout',function(e,d){if(activeTile!==d.data.n)d3.select(this).attr('opacity',0.9).attr('filter','none');})
+  .on('click',function(e,d){selectTile(d.data);});
+cells.each(function(d){
+  const cw=d.x1-d.x0,ch=d.y1-d.y0;
+  const g=d3.select(this);
+  if(cw>70&&ch>40){
+    g.append('text').attr('x',10).attr('y',ch-28).style('fill','rgba(255,255,255,.95)').style('font-size',cw>200?'13px':'10px').style('font-weight','600').style('font-family',"'DM Sans',sans-serif").text(cw>140?d.data.n:d.data.short);
+    g.append('text').attr('x',10).attr('y',ch-12).style('fill','rgba(255,255,255,.8)').style('font-size',cw>200?'12px':'10px').style('font-family',"'DM Sans',sans-serif").text(`$${(d.data.v/1000).toFixed(0)}B`);
+  } else if(cw>30&&ch>25){
+    g.append('text').attr('x',cw/2).attr('y',ch/2).attr('text-anchor','middle').attr('dominant-baseline','central').style('fill','rgba(255,255,255,.9)').style('font-size','9px').style('font-weight','600').style('font-family',"'DM Sans',sans-serif").text(d.data.short);
+  }
+});
+
+function selectTile(d){
+  const panel=document.getElementById('tmapDetail');
+  const inner=document.getElementById('tmapDetailInner');
+  if(activeTile===d.n){
+    activeTile=null;panel.style.display='none';
+    cells.selectAll('rect').attr('opacity',0.9).attr('filter','none');return;
+  }
+  activeTile=d.n;
+  cells.selectAll('rect').attr('opacity',(nd)=>nd.data.n===d.n?1:0.4).attr('filter',(nd)=>nd.data.n===d.n?'brightness(1.1)':'none');
+  const chgColor=d.yoyDir==='up'?'#059669':'#DC2626';
+  const progList=d.programs.map(p=>`<li style="margin-bottom:4px;">${p}</li>`).join('');
+  inner.innerHTML=`<div style="padding:16px 20px;border-left:5px solid ${d.c};display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;">
+    <div style="flex:0 0 auto;">
+      <div style="font-size:11px;font-weight:600;color:${d.c};text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">${d.n}</div>
+      <div style="font-size:32px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;line-height:1;">$${Math.round(d.v/1000).toLocaleString()}B</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px;">${d.pct}% of total budget</div>
+      <div style="font-size:12px;font-weight:600;color:${chgColor};margin-top:6px;">FY25-26→FY26-27: ${d.yoy}</div>
+    </div>
+    <div style="width:1px;background:var(--border);align-self:stretch;flex-shrink:0;"></div>
+    <div style="flex:1;min-width:200px;">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.55;">${d.desc}</div>
+      <div style="font-size:10px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Key Appropriations</div>
+      <ul style="list-style:none;padding:0;font-size:11px;color:var(--muted);">${progList}</ul>
+    </div>
+  </div>`;
+  panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// 12. Waterfall
+const WF=[
+  {l:'Beginning Balance (FY25-26)',v:10413,c:'#059669'},{l:'GR Collections FY26-27',v:52203,c:'#059669'},
+  {l:'Trust Fund Sweeps',v:107,c:'#059669'},{l:'Tax Package & Gaming',v:-641,c:'#DC2626'},
+  {l:'Budget Stabilization Fund',v:-118,c:'#DC2626'},{l:'Health Insurance & Emerg. Fund',v:-653,c:'#DC2626'},
+  {l:'Governor\'s Recommended Budget',v:-53554,c:'#DC2626'},{l:'GR Ending Balance June 30, 2027',v:7757,c:'#F97316',b:true}
+];
+const wfEl=document.getElementById('wf');const mW=62723;
+WF.forEach(d=>{const w=Math.abs(d.v)/mW*100;const lbl=d.v>0?`+$${(d.v/1000).toFixed(1)}B`:`-$${(Math.abs(d.v)/1000).toFixed(1)}B`;const bg=d.b?'background:var(--bg);border-radius:6px;':'';wfEl.innerHTML+=`<div class="wf-row" style="${bg}"><div class="wf-lbl">${d.l}</div><div class="wf-bar"><div class="wf-fill" style="width:${w}%;background:${d.c};min-width:40px;${d.b?'font-weight:600;':''}"><span class="wf-val">${lbl}</span></div></div></div>`;});
+
+</script>
+</body>
+</html>
